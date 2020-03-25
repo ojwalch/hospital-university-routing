@@ -26,6 +26,7 @@ These instructions are for Mac, with [Homebrew](https://brew.sh) installed, usin
 1. Install dependencies with Homebrew:
 
 `brew install boost git cmake libzip libstxxl libxml2 lua tbb ccache`
+
 `brew install GDAL`
 
 2. Clone the [osrm-backend repo](https://github.com/Project-OSRM/osrm-backend): 
@@ -35,9 +36,13 @@ These instructions are for Mac, with [Homebrew](https://brew.sh) installed, usin
 3. Build the backend by running the following commands: 
 
 `cd osrm-backend`
+
 `mkdir build`
+
 `cd build`
+
 `cmake ../ -DENABLE_MASON=0`
+
 `make` 
 
 ## Getting the data
@@ -53,13 +58,16 @@ There are two ways of processing the data, depending on the type of routing you 
 Calling `osrm-extract` requires a profile; e.g. car. Relevant profiles are located in the `/profiles` directory inside `osrm-backend`. You can provide the profile with the `-p` flag. Below is an example of the extraction, partition, and customize steps:  
 
 `osrm-extract new-york-latest.osm.pbf -p ../osrm-backend/profiles/car.lua`
+
 `osrm-partition new-york-latest.osrm`
+
 `osrm-customize new-york-latest.osrm`
 
 
 The alternative method of routing is Contraction Hierarchies. For this, preprocesssing involves calling `osrm-extract` and `osrm-contract`; e.g. 
 
 `osrm-extract new-york-latest.osm.pbf -p ../osrm-backend/profiles/car.lua`
+
 `osrm-contract new-york-latest.osrm`
 
 This is not currently used in the C++ code, though you can implement it by uncommenting
@@ -70,8 +78,11 @@ This is not currently used in the C++ code, though you can implement it by uncom
 The C++ code to interface with the `.osrm` files extracted in the previous step is in the `/route-distances folder`. To compile it, navigate to the folder and run the following commands: 
 
 `mkdir build`
+
 `cd build`
+
 `cmake ..`
+
 `make`
 
 This generates the `route-distances` executable in the build folder. The arguments to the executable are
